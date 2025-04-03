@@ -1,0 +1,14 @@
+# Ne pas inclure les modules installés
+node_modules/
+
+# Ne pas inclure le fichier de config environnement
+.env
+
+# Ne pas inclure les logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Systèmes d'exploitation
+.DS_Store
+Thumbs.db
