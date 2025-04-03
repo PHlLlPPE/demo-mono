@@ -21,6 +21,12 @@ Ce document explique comment déployer une application **Node.js + Express + EJS
   "start": "node index.js"
 }
 ```
+- Une section `engines` pour aider Coolify à identifier l’environnement Node.js :
+```json
+"engines": {
+  "node": ">=18"
+}
+```
 
 ---
 
@@ -37,17 +43,18 @@ Ce document explique comment déployer une application **Node.js + Express + EJS
 - Ne pas cocher “Is it a static site?”
 - Build Pack : `Nixpacks`
 
+---
+
 ### 2. Configuration de l’application
 
-- Install Command : `npm install`
-- Start Command : `npm start`
-- Ajouter si besoin :
-```json
-"engines": {
-  "node": ">=18"
-}
+- **Install Command** : `npm install`
+- **Start Command** : `npm start`
+- Vérifier que le fichier `.env` contient bien :
+```env
+PORT=3000
 ```
-dans le fichier `package.json` pour aider Coolify à détecter l’environnement Node.js
+
+---
 
 ### 3. Déploiement
 
@@ -62,11 +69,37 @@ dans le fichier `package.json` pour aider Coolify à détecter l’environnement
 - L’application est accessible via une URL du type :  
   `https://nom.coolify.io` ou `https://ip-xxx-xxx-xxx.sslip.io`
 - Le serveur Node.js sert les pages dynamiques EJS via Express
-- La structure reste **100% monolithique** : tout est géré dans une seule app
+- Le rendu est généré côté serveur (EJS)
+- La structure reste **100% monolithique** : tout est géré dans une seule application (rendu, traitement des routes, logique)
 
 ---
 
-## 🧪 Exemple de structure de projet
+## 🧪 Logique backend démontrée
+
+Ce projet contient une **logique serveur simple** intégrée dans la route `/` :
+un **compteur de visites** est incrémenté côté backend à chaque fois que la page d’accueil est consultée.
+
+```js
+let visitCount = 0;
+
+app.get('/', (req, res) => {
+  visitCount++;
+  res.render('index', {
+    title: 'Accueil',
+    visits: visitCount
+  });
+});
+```
+
+Ce compteur est ensuite injecté dans la vue `index.ejs` pour être affiché dynamiquement :
+
+```ejs
+<p>Cette page a été visitée <strong><%= visits %></strong> fois depuis le démarrage du serveur.</p>
+```
+
+---
+
+## 📁 Exemple de structure de projet
 
 ```
 mini-monolith/
@@ -82,5 +115,3 @@ mini-monolith/
 ├── public/
 │   └── style.css
 ```
-
----

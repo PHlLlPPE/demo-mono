@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ✅ Déclaration du compteur de visites
+let visitCount = 0;
+
 // Configuration EJS
 app.set('view engine', 'ejs');
 app.set('views', './views');
@@ -15,7 +18,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get('/', (req, res) => {
-  res.render('index', { title: 'Accueil' });
+  visitCount++; // ✅ Incrémentation à chaque visite
+  res.render('index', {
+    title: 'Accueil',
+    visits: visitCount // ✅ On passe la valeur au template
+  });
 });
 
 app.get('/about', (req, res) => {
