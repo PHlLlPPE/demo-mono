@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Contact</h1>
+  <form action="/contact" method="POST">
+    <label>Nom : <input type="text" name="name" required></label><br>
+    <label>Message : <textarea name="message" required></textarea></label><br>
+    <button type="submit">Envoyer</button>
+  </form>
+</body>
+</html>
